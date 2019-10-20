@@ -2,18 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using clearArch.Applicaiton.Interfaces;
+using clearArch.Applicaiton.ViewModals;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.API.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class EmployeeController : Controller
     {
+        private IEmployeeService _employeeServie;
+
+        public EmployeeController(IEmployeeService employeeService)
+        {
+            _employeeServie = employeeService;
+        }
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            EmployeeViewModal modal = _employeeServie.GetEmployees();
+            return Ok(modal);
         }
 
         // GET api/values/5

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ClearAarch.Infra.Data;
+using clearArch.Infr.IOC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,8 @@ namespace CleanArch.API
 
             // Add S3 to the ASP.NET Core dependency injection framework.
             services.AddAWSService<Amazon.S3.IAmazonS3>();
+            RegisterServices(services);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -49,6 +52,11 @@ namespace CleanArch.API
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            DependencyContainer.RegisterServices(services);
         }
     }
 }
